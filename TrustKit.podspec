@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.documentation_url = 'https://datatheorem.github.io/TrustKit/documentation/'
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.authors      = 'Alban Diquet', 'Angela Chow', 'Eric Castro'
-  s.source       = { :git => "https://github.com/datatheorem/TrustKit.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/vemahendran/TrustKit.git", :tag => "#{s.version}" }
   s.ios.deployment_target = '7.0'
   s.osx.deployment_target = '10.9'
   s.tvos.deployment_target = '10.0'
@@ -14,6 +14,6 @@ Pod::Spec.new do |s|
   s.source_files = 'TrustKit', 'TrustKit/**/*.{h,m,c}'
   s.header_mappings_dir = 'TrustKit'
   s.public_header_files = 'TrustKit/TrustKit.h', 'TrustKit/TSKPinningValidator.h'
-  s.frameworks = 'Foundation', 'Security'
+  s.frameworks = 'Foundation', 'Security', 'Reachability'
   s.requires_arc = true
 end
