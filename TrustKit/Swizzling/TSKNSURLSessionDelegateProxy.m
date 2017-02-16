@@ -9,7 +9,9 @@
 #import "TSKNSURLSessionDelegateProxy.h"
 #import "../Dependencies/RSSwizzle/RSSwizzle.h"
 #import "../TrustKit+Private.h"
-
+#import <Reachability/Reachability.h>
+#import <CoreTelephony/CTCarrier.h>
+#import <CoreTelephony/CTTelephonyNetworkInfo.h>
 
 @implementation TSKNSURLSessionDelegateProxy
 
