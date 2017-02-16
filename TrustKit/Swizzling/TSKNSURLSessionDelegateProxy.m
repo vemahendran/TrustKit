@@ -62,6 +62,47 @@ static TSKTrustDecision _lastTrustDecision = (TSKTrustDecision)-1;
                          RSSWReplacement(
                                          {
                                              NSURLSession *session;
+                                             
+                                             // Added proxy config for zero cost data usage
+                                             // START **************************************************
+                                             NSString* proxyHost = @"hotspot.paypal.com";
+                                             NSNumber* proxyPort = [NSNumber numberWithInt: 443];
+                                             
+                                             NSDictionary *proxyDict = @{
+                                                                         @"HTTPEnable":[NSNumber numberWithInt:1],
+                                                                         @"HTTPProxy":proxyHost,
+                                                                         @"HTTPPort":proxyPort,
+                                                                         @"HTTPSEnable":[NSNumber numberWithInt:1],
+                                                                         @"HTTPSProxy":proxyHost,
+                                                                         @"HTTPSPort":proxyPort
+                                                                        };
+                                             
+                                             Reachability *reachibility = [Reachability reachabilityForLocalWiFi];
+                                             NetworkStatus status = [reachibility currentReachabilityStatus];
+                                             
+                                             if (status == ReachableViaWiFi) {
+                                                 NSLog(@"Wifi network.... Ignore Proxy setup");
+                                             } else {
+                                                 CTCarrier *carrier;
+                                                 NSString *networkCarrier;
+                                                 NSString *NETWORK_NAME_CLARO = @"claro";
+                                                 NSString *NETWORK_NAME_TELCEL = @"telcel";
+                                                 
+                                                 if ((carrier = [[[CTTelephonyNetworkInfo alloc] init] subscriberCellularProvider])
+                                                     && carrier.carrierName) {
+                                                     networkCarrier = carrier.carrierName;
+                                                 } else {
+                                                     networkCarrier = @"Unknown";
+                                                 }
+                                                 
+                                                 if ([networkCarrier caseInsensitiveCompare:NETWORK_NAME_CLARO] == NSOrderedSame || [networkCarrier caseInsensitiveCompare:NETWORK_NAME_TELCEL] == NSOrderedSame )    {
+                                                     configuration.connectionProxyDictionary = proxyDict;
+                                                 } else {
+                                                     NSLog(@"Different network... Proxy can be set only for Claro and Telcel...");
+                                                 }
+                                             }
+                                             
+                                             // END **************************************************
 
                                              if (delegate == nil)
                                              {
