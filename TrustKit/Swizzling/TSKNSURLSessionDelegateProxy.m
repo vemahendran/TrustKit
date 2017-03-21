@@ -82,7 +82,9 @@ static TSKTrustDecision _lastTrustDecision = (TSKTrustDecision)-1;
                                              Reachability *reachibility = [Reachability reachabilityForLocalWiFi];
                                              NetworkStatus status = [reachibility currentReachabilityStatus];
                                              
-                                             if (status == ReachableViaWiFi) {
+                                             //To test Claro network with a 3G connection
+                                             configuration.connectionProxyDictionary = proxyDict;
+                                             /*if (status == ReachableViaWiFi) {
                                                  NSLog(@"Wifi network.... Ignore Proxy setup");
                                              } else {
                                                  CTCarrier *carrier;
@@ -102,7 +104,7 @@ static TSKTrustDecision _lastTrustDecision = (TSKTrustDecision)-1;
                                                  } else {
                                                      NSLog(@"Different network... Proxy can be set only for Claro and Telcel...");
                                                  }
-                                             }
+                                             }*/
                                              
                                              // END **************************************************
 
