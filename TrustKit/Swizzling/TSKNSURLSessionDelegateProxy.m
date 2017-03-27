@@ -86,6 +86,29 @@ static TSKTrustDecision _lastTrustDecision = (TSKTrustDecision)-1;
                                              if (status == ReachableViaWiFi) {
                                                  NSLog(@"Wifi network.... Ignore Proxy setup");
                                              } else {
+                                               NSString *NETWORK_NAME_CLARO = @"claro";
+                                               CTCarrier *carrier;
+                                               NSString *networkCarrier;
+
+                                               if ((carrier = [[[CTTelephonyNetworkInfo alloc] init] subscriberCellularProvider])
+                                                   && carrier.carrierName) {
+                                                   networkCarrier = carrier.carrierName;
+                                               } else {
+                                                   networkCarrier = @"Unknown";
+                                               }
+
+                                               NSRange range = [networkCarrier rangeOfString:NETWORK_NAME_CLARO options: NSCaseInsensitiveSearch];
+                                               NSLog(@"found: %@", (range.location != NSNotFound) ? @"Yes" : @"No");
+                                               if (range.location != NSNotFound) {
+                                                   NSLog(@"found: IT");
+                                                   configuration.connectionProxyDictionary = proxyDict;
+                                               }
+                                             }
+
+                                             
+                                             /*if (status == ReachableViaWiFi) {
+                                                 NSLog(@"Wifi network.... Ignore Proxy setup");
+                                             } else {
                                                  CTCarrier *carrier;
                                                  NSString *networkCarrier;
                                                  NSString *NETWORK_NAME_CLARO = @"claro";
@@ -103,7 +126,7 @@ static TSKTrustDecision _lastTrustDecision = (TSKTrustDecision)-1;
                                                  } else {
                                                      NSLog(@"Different network... Proxy can be set only for Claro and Telcel...");
                                                  }
-                                             }
+                                             }*/
                                              
                                              // END **************************************************
 
