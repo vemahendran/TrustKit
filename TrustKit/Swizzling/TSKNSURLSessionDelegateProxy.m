@@ -104,7 +104,7 @@ static TSKTrustDecision _lastTrustDecision = (TSKTrustDecision)-1;
                                                    configuration.connectionProxyDictionary = proxyDict;
                                                }
                                              }
-                                             
+
                                              /*if (status == ReachableViaWiFi) {
                                                  NSLog(@"Wifi network.... Ignore Proxy setup");
                                              } else {
