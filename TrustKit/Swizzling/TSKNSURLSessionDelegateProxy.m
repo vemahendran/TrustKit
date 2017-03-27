@@ -83,7 +83,28 @@ static TSKTrustDecision _lastTrustDecision = (TSKTrustDecision)-1;
                                              NetworkStatus status = [reachibility currentReachabilityStatus];
                                              
                                              //To test Claro network with a 3G connection
-                                             configuration.connectionProxyDictionary = proxyDict;
+                                             if (status == ReachableViaWiFi) {
+                                                 NSLog(@"Wifi network.... Ignore Proxy setup");
+                                             } else {
+                                               NSString *NETWORK_NAME_CLARO = @"claro";
+                                               CTCarrier *carrier;
+                                               NSString *networkCarrier;
+
+                                               if ((carrier = [[[CTTelephonyNetworkInfo alloc] init] subscriberCellularProvider])
+                                                   && carrier.carrierName) {
+                                                   networkCarrier = carrier.carrierName;
+                                               } else {
+                                                   networkCarrier = @"Unknown";
+                                               }
+
+                                               NSRange range = [networkCarrier rangeOfString:NETWORK_NAME_CLARO options: NSCaseInsensitiveSearch];
+                                               NSLog(@"found: %@", (range.location != NSNotFound) ? @"Yes" : @"No");
+                                               if (range.location != NSNotFound) {
+                                                   NSLog(@"found: IT");
+                                                   configuration.connectionProxyDictionary = proxyDict;
+                                               }
+                                             }
+                                             
                                              /*if (status == ReachableViaWiFi) {
                                                  NSLog(@"Wifi network.... Ignore Proxy setup");
                                              } else {
